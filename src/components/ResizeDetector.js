@@ -1,7 +1,6 @@
 import React, { PureComponent, isValidElement, cloneElement, createElement } from 'react';
 import { findDOMNode } from 'react-dom';
 import ResizeObserver from 'resize-observer-polyfill';
-import rafSchd from 'raf-schd';
 import { bool, number, string, shape, func, any, node } from 'prop-types';
 
 import { getHandle, isFunction, isSSR, isDOMElement } from 'lib/utils';
@@ -87,7 +86,7 @@ class ResizeDetector extends PureComponent {
   createUpdater = () => {
     this.rafClean();
 
-    this.raf = rafSchd(({ width, height }) => {
+    this.raf = ({ width, height }) => {
       const { onResize } = this.props;
 
       if (isFunction(onResize)) {
@@ -95,7 +94,7 @@ class ResizeDetector extends PureComponent {
       }
 
       this.setState({ width, height });
-    });
+    };
 
     return this.raf;
   };
